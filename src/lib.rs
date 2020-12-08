@@ -1,9 +1,11 @@
 pub mod chain;
 
-use std::collections::HashSet;
-use std::fmt::{Debug, Formatter};
-use std::fmt;
 use anyhow::Result;
+use starcoin_vm_types::account_address::AccountAddress;
+use std::collections::HashSet;
+use std::fmt;
+use std::fmt::{Debug, Formatter};
+use std::iter::FromIterator;
 
 pub trait AddressPool {
     fn get_pool(&self) -> Vec<Address>;
@@ -12,7 +14,7 @@ pub trait AddressPool {
 
 #[derive(Eq, Ord, PartialOrd, PartialEq, Hash, Clone)]
 pub struct Address {
-    pub add: Vec<u8>,
+    pub add: AccountAddress,
     pub minted_blocks: u32,
     pub weight: u32,
 }
@@ -20,7 +22,7 @@ pub struct Address {
 impl Debug for Address {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         f.debug_struct("Address")
-            .field("address", &hex::encode(self.add.clone()))
+            .field("address", &self.add.to_string())
             .field("minted_blocks", &self.minted_blocks)
             .field("weight", &self.weight)
             .finish()
@@ -36,7 +38,11 @@ impl Race {
         pool.into_iter().take(n as usize).collect()
     }
 
-    pub fn select<T: AddressPool>(n: u16, input: &T, black_list: HashSet<Address>) -> HashSet<Address> {
+    pub fn select<T: AddressPool>(
+        n: u16,
+        input: &T,
+        black_list: Vec<AccountAddress>,
+    ) -> HashSet<Address> {
         let seeds = input.get_seeds(n).unwrap();
         let mut pool = vec![];
         for address in input.get_pool().iter() {
@@ -47,13 +53,12 @@ impl Race {
 
         let mut selected: HashSet<Address> = HashSet::new();
         let pool_size = pool.len() as u32;
+        let black_set: HashSet<AccountAddress> = HashSet::from_iter(black_list.iter().cloned());
+        println!("{:?}", black_set);
         for mut nonce in seeds {
             loop {
                 let address = pool.get((nonce % pool_size) as usize).unwrap();
-                if black_list.contains(address){
-                    continue;
-                }
-                if !selected.contains(address){
+                if !selected.contains(address) && !black_set.contains(&address.add) {
                     selected.insert(address.clone());
                     break;
                 }
