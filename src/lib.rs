@@ -1,36 +1,54 @@
-use std::collections::HashSet;
+pub mod chain;
 
-#[derive(Eq, Ord, PartialOrd, PartialEq, Hash, Debug)]
+use std::collections::HashSet;
+use crate::chain::AddressPool;
+use std::fmt::{Debug, Formatter};
+use std::fmt;
+
+#[derive(Eq, Ord, PartialOrd, PartialEq, Hash, Clone)]
 pub struct Address {
     add: Vec<u8>,
     weight: u32,
 }
 
-impl Address {
-    fn get_weight(&self) -> u32 {
-        self.weight
+impl Debug for Address {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Address")
+            .field("address", &hex::encode(self.add.clone()))
+            .field("weight", &self.weight)
+            .finish()
     }
 }
 
-struct AddressPool(Vec<Address>);
+pub struct Race;
 
-impl AddressPool {
-    pub fn select(&mut self, nonces: Vec<u32>) -> HashSet<&Address> {
-        assert!(nonces.len() < self.0.len());
-        let mut selected = HashSet::new();
+impl Race {
+    pub fn top<T: AddressPool>(n: u16, pool: &T) -> HashSet<Address> {
+        let mut ret = HashSet::new();
+        let mut pool = pool.get_pool();
+        pool.reverse();
+        for i in 0..n {
+            ret.insert(pool[i as usize].clone());
+        }
+        ret
+    }
+
+    pub fn select<T: AddressPool>(n: u16, input: &T) -> HashSet<Address> {
+        let seeds = input.get_seeds(n).unwrap();
         let mut pool = vec![];
-        self.0.sort_by(|a, b| a.get_weight().cmp(&b.get_weight()));
-        for address in self.0.iter() {
-            for _ in 0..address.get_weight() {
-                pool.push(address);
+        for address in input.get_pool().iter() {
+            for _ in 0..address.weight {
+                pool.push(address.clone());
             }
         }
+
+        let mut selected: HashSet<Address> = HashSet::new();
         let pool_size = pool.len() as u32;
-        for mut nonce in nonces {
+        for mut nonce in seeds {
             loop {
-                let address = pool[(nonce % pool_size) as usize];
+                let address = pool.get((nonce % pool_size) as usize).unwrap();
                 if !selected.contains(address) {
-                    selected.insert(address);
+                    selected.insert(address.clone());
                     break;
                 }
                 nonce += 1;
@@ -42,13 +60,10 @@ impl AddressPool {
 
 #[test]
 fn test_select() {
-    let mut pool = AddressPool {
-        0: vec![Address { add: vec![0], weight: 1 },
-                Address { add: vec![1], weight: 2 },
-                Address { add: vec![2], weight: 3 },
-                Address { add: vec![3], weight: 4 },
-        ]
-    };
-    let adds = pool.select(vec![120]);
-    assert_eq!(adds.contains(&Address { add: vec![0], weight: 1 }), true);
+    let path = std::path::Path::new("/Users/fikgol/workspaces/stcmint-fight/starcoindb");
+    let chain = BlockSnapshot::load_from_db(path, 1607090400, 1607392800).unwrap();
+    let luckies = Race::select(2, &chain);
+    let winners = Race::top(2, &chain);
+    println!("{:?}", luckies);
+    println!("{:?}", winners);
 }
