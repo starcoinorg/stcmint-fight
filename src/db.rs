@@ -5,13 +5,8 @@ use starcoin_storage::db_storage::DBStorage;
 use anyhow::Result;
 use std::path::Path;
 use std::collections::HashMap;
-use crate::Address;
+use crate::{Address, AddressPool};
 
-
-pub trait AddressPool {
-    fn get_pool(&self) -> Vec<Address>;
-    fn get_seeds(&self, c: u16) -> Result<Vec<u32>>;
-}
 
 pub struct BlockSnapshot {
     address_blocks: HashMap<Vec<u8>, u32>,
@@ -31,7 +26,7 @@ impl BlockSnapshot {
         ))?;
         for number in 0.. {
             if let Ok(Some(header)) = storage.get_block_header_by_number(number) {
-                if header.timestamp / 1000 < start_timestamp || header.timestamp > end_timestamp {
+                if header.timestamp / 1000 < start_timestamp || header.timestamp / 1000 > end_timestamp {
                     continue;
                 }
                 if start_block_num == 0 {
@@ -59,8 +54,9 @@ impl BlockSnapshot {
 
 impl AddressPool for BlockSnapshot {
     fn get_pool(&self) -> Vec<Address> {
-        let mut address_blocks: Vec<Address> = self.address_blocks.iter().map(|(a, w)| Address { add: a.to_owned(), weight: w.to_owned() }).collect();
-        address_blocks.sort_by(|a, b| a.weight.cmp(&b.weight));
+        let mut address_blocks: Vec<Address> = self.address_blocks.iter().map(|(a, w)| Address { add: a.to_owned(), minted_blocks: w.to_owned(), weight: (w.to_owned() as f32).log2() as u32 }).collect();
+
+        address_blocks.sort_by(|a, b| a.minted_blocks.cmp(&b.minted_blocks));
         address_blocks
     }
 

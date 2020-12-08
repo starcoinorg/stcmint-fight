@@ -1,20 +1,27 @@
-pub mod chain;
+pub mod db;
 
 use std::collections::HashSet;
-use crate::chain::AddressPool;
 use std::fmt::{Debug, Formatter};
 use std::fmt;
+use anyhow::Result;
+
+pub trait AddressPool {
+    fn get_pool(&self) -> Vec<Address>;
+    fn get_seeds(&self, c: u16) -> Result<Vec<u32>>;
+}
 
 #[derive(Eq, Ord, PartialOrd, PartialEq, Hash, Clone)]
 pub struct Address {
-    add: Vec<u8>,
-    weight: u32,
+    pub add: Vec<u8>,
+    pub minted_blocks: u32,
+    pub weight: u32,
 }
 
 impl Debug for Address {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         f.debug_struct("Address")
             .field("address", &hex::encode(self.add.clone()))
+            .field("minted_blocks", &self.minted_blocks)
             .field("weight", &self.weight)
             .finish()
     }
@@ -33,7 +40,7 @@ impl Race {
         ret
     }
 
-    pub fn select<T: AddressPool>(n: u16, input: &T) -> HashSet<Address> {
+    pub fn select<T: AddressPool>(n: u16, input: &T, black_list: HashSet<Address>) -> HashSet<Address> {
         let seeds = input.get_seeds(n).unwrap();
         let mut pool = vec![];
         for address in input.get_pool().iter() {
@@ -47,7 +54,10 @@ impl Race {
         for mut nonce in seeds {
             loop {
                 let address = pool.get((nonce % pool_size) as usize).unwrap();
-                if !selected.contains(address) {
+                if black_list.contains(address){
+                    continue;
+                }
+                if !selected.contains(address){
                     selected.insert(address.clone());
                     break;
                 }
@@ -56,14 +66,4 @@ impl Race {
         }
         selected
     }
-}
-
-#[test]
-fn test_select() {
-    let path = std::path::Path::new("/Users/fikgol/workspaces/stcmint-fight/starcoindb");
-    let chain = BlockSnapshot::load_from_db(path, 1607090400, 1607392800).unwrap();
-    let luckies = Race::select(2, &chain);
-    let winners = Race::top(2, &chain);
-    println!("{:?}", luckies);
-    println!("{:?}", winners);
 }
