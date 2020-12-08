@@ -6,7 +6,7 @@ fn main() {
     let path = std::path::Path::new("./starcoindb/db");
     let start_timestamp = 1607090400;
     let end_timestamp = 1607392800;
-    let top_n = 10;
+    let top_n = 100;
     let lucky_n = 2;
     let mut black_list = vec![
         "0x8fed3341166cfe62a8a19380641ff7a7",
