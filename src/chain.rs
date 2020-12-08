@@ -31,23 +31,23 @@ impl BlockSnapshot {
         let chain = BlockChain::new(TimeServiceType::RealTimeService.new_time_service(), head_block_hash, Arc::new(storage))?;
 
         for number in 0.. {
-            if let Ok(Some(header)) = chain.get_header_by_number(number) {
-                if header.timestamp / 1000 < start_timestamp || header.timestamp / 1000 > end_timestamp {
-                    continue;
-                }
-                if start_block_num == 0 {
-                    start_block_num = header.number;
-                }
-                let author = header.author.to_vec();
-                if let Some(&blocks) = address_blocks.get(&author) {
-                    address_blocks.insert(author, blocks + 1);
-                } else {
-                    address_blocks.insert(author, 0);
-                }
-                end_block_num = header.number;
-            } else {
+            let header = chain.get_header_by_number(number)?.ok_or_else(||anyhow::anyhow!("Can not find block by number: {}", number))?;
+            if header.timestamp / 1000 <= start_timestamp {
+                continue;
+            }
+            if header.timestamp / 1000 > end_timestamp {
                 break;
             }
+            if start_block_num == 0 {
+                start_block_num = header.number;
+            }
+            let author = header.author.to_vec();
+            if let Some(&blocks) = address_blocks.get(&author) {
+                address_blocks.insert(author, blocks + 1);
+            } else {
+                address_blocks.insert(author, 1);
+            }
+            end_block_num = header.number;
         }
         Ok(Self {
             address_blocks,

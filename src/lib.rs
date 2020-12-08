@@ -31,13 +31,9 @@ pub struct Race;
 
 impl Race {
     pub fn top<T: AddressPool>(n: u16, pool: &T) -> HashSet<Address> {
-        let mut ret = HashSet::new();
         let mut pool = pool.get_pool();
         pool.reverse();
-        for i in 0..n {
-            ret.insert(pool[i as usize].clone());
-        }
-        ret
+        pool.into_iter().take(n as usize).collect()
     }
 
     pub fn select<T: AddressPool>(n: u16, input: &T, black_list: HashSet<Address>) -> HashSet<Address> {
