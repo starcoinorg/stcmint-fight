@@ -1,4 +1,4 @@
-use stcmint_fight::db::BlockSnapshot;
+use stcmint_fight::chain::BlockSnapshot;
 use stcmint_fight::{Address, Race};
 use std::collections::HashSet;
 

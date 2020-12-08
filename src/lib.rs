@@ -1,4 +1,4 @@
-pub mod db;
+pub mod chain;
 
 use std::collections::HashSet;
 use std::fmt::{Debug, Formatter};
