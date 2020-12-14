@@ -172,9 +172,9 @@ dependencies = [
 
 [[package]]
 name = "ahash"
-version = "0.4.6"
+version = "0.4.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f6789e291be47ace86a60303502173d84af8327e3627ecf334356ee0f87a164c"
+checksum = "739f4a8db6605981345c5654f3a85b056ce52f37a39d34da03f25bf2151ea16e"
 
 [[package]]
 name = "aho-corasick"
@@ -202,9 +202,9 @@ checksum = "2c0df63cb2955042487fad3aefd2c6e3ae7389ac5dc1beb28921de0b69f779d4"
 
 [[package]]
 name = "arc-swap"
-version = "0.4.7"
+version = "0.4.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4d25d88fd6b8041580a654f9d0c581a047baee2b3efee13275f2fc392fc75034"
+checksum = "dabe5a181f83789739c194cbe5a897dde195078fac08568d09221fd6137a7ba8"
 
 [[package]]
 name = "arrayref"
@@ -305,14 +305,32 @@ dependencies = [
 ]
 
 [[package]]
-name = "async-std"
-version = "1.7.0"
+name = "async-process"
+version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a7e82538bc65a25dbdff70e4c5439d52f068048ab97cdea0acd73f131594caa1"
+checksum = "4c8cea09c1fb10a317d1b5af8024eeba256d6554763e85ecd90ff8df31c7bbda"
 dependencies = [
+ "async-io",
+ "blocking",
+ "cfg-if 0.1.10",
+ "event-listener",
+ "futures-lite",
+ "once_cell",
+ "signal-hook",
+ "winapi 0.3.9",
+]
+
+[[package]]
+name = "async-std"
+version = "1.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8f9f84f1280a2b436a2c77c2582602732b6c2f4321d5494d6e799e6c367859a8"
+dependencies = [
+ "async-channel",
  "async-global-executor",
  "async-io",
  "async-mutex",
+ "async-process",
  "blocking",
  "crossbeam-utils 0.8.1",
  "futures-channel",
@@ -325,7 +343,7 @@ dependencies = [
  "memchr",
  "num_cpus",
  "once_cell",
- "pin-project-lite 0.1.11",
+ "pin-project-lite 0.2.0",
  "pin-utils",
  "slab",
  "wasm-bindgen-futures",
@@ -760,6 +778,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8aebca1129a03dc6dc2b127edd729435bbc4a37e1d5f4d7513165089ceb02634"
 
 [[package]]
+name = "cpuid-bool"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dcb25d077389e53838a8158c8e99174c5a9d902dee4904320db714f3c653ffba"
+
+[[package]]
 name = "crc32fast"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -829,7 +853,7 @@ dependencies = [
 [[package]]
 name = "cryptonight-rs"
 version = "0.5.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "cc",
  "libc",
@@ -872,9 +896,9 @@ dependencies = [
 
 [[package]]
 name = "darling"
-version = "0.10.2"
+version = "0.10.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0d706e75d87e35569db781a9b5e2416cff1236a47ed380831f959382ccd5f858"
+checksum = "15d658711a12632b5574c8d5b3fc5d2f0d2f87b9fbf9237ee0f759b88bb6bdec"
 dependencies = [
  "darling_core",
  "darling_macro",
@@ -882,23 +906,23 @@ dependencies = [
 
 [[package]]
 name = "darling_core"
-version = "0.10.2"
+version = "0.10.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f0c960ae2da4de88a91b2d920c2a7233b400bc33cb28453a2987822d8392519b"
+checksum = "16d3514d243331d8acde56bfcf45d0147aabbda853c2f49dce081ea85f9a7220"
 dependencies = [
  "fnv",
  "ident_case",
  "proc-macro2",
  "quote",
- "strsim 0.9.3",
+ "strsim 0.10.0",
  "syn",
 ]
 
 [[package]]
 name = "darling_macro"
-version = "0.10.2"
+version = "0.10.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d9b5a2f4ac4969822c62224815d069952656cadc7084fdca9751e6d959189b72"
+checksum = "44f63c369ef0c17ad17585d31d5f2bf10dece2710bf0766e01db57a6f9849a2e"
 dependencies = [
  "darling_core",
  "quote",
@@ -1208,8 +1232,8 @@ checksum = "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1"
 
 [[package]]
 name = "forkable-jellyfish-merkle"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "bincode",
@@ -1518,7 +1542,7 @@ version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d7afe4a420e3fe79967a00898cc1f4db7c8a49a9333a29f8a4bd76a253d5cd04"
 dependencies = [
- "ahash 0.4.6",
+ "ahash 0.4.7",
 ]
 
 [[package]]
@@ -2230,9 +2254,9 @@ dependencies = [
 
 [[package]]
 name = "lru"
-version = "0.6.1"
+version = "0.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "be716eb6878ca2263eb5d00a781aa13264a794f519fe6af4fbb2668b2d5441c0"
+checksum = "3abe07af102235a56ac9a6dd904aab1e05483e2e8afdfffec3598be55b1b7606"
 dependencies = [
  "hashbrown",
 ]
@@ -2453,8 +2477,8 @@ dependencies = [
 
 [[package]]
 name = "move-prover"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "abigen",
  "anyhow",
@@ -2595,9 +2619,9 @@ dependencies = [
 
 [[package]]
 name = "net2"
-version = "0.2.36"
+version = "0.2.37"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d7cf75f38f16cb05ea017784dc6dbfd354f76c223dba37701734c4f5a9337d02"
+checksum = "391630d12b68002ae1e25e8f974306474966550ad82dac6886fb8910c19568ae"
 dependencies = [
  "cfg-if 0.1.10",
  "libc",
@@ -2606,8 +2630,8 @@ dependencies = [
 
 [[package]]
 name = "network-p2p-types"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "bitflags",
@@ -2615,6 +2639,7 @@ dependencies = [
  "derive_more",
  "libp2p",
  "rand 0.7.3",
+ "sc-peerset",
  "serde",
  "serde_json",
  "starcoin-canonical-serialization",
@@ -2865,12 +2890,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "paste"
-version = "1.0.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7151b083b0664ed58ed669fcdd92f01c3d2fdbf10af4931a301474950b52bfa9"
-
-[[package]]
 name = "peeking_take_while"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3008,11 +3027,11 @@ dependencies = [
 
 [[package]]
 name = "polyval"
-version = "0.4.2"
+version = "0.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b3fd900a291ceb8b99799cc8cd3d1d3403a51721e015bc533528b2ceafcc443c"
+checksum = "b4fd92d8e0c06d08525d2e2643cc2b5c80c69ae8eb12c18272d501cd7079ccc0"
 dependencies = [
- "cfg-if 1.0.0",
+ "cpuid-bool 0.2.0",
  "universal-hash",
 ]
 
@@ -3448,6 +3467,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "sc-peerset"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
+dependencies = [
+ "futures",
+ "libp2p",
+ "log",
+ "serde_json",
+ "sp-utils",
+ "wasm-timer",
+]
+
+[[package]]
 name = "scopeguard"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3465,7 +3497,7 @@ dependencies = [
 [[package]]
 name = "serde-helpers"
 version = "0.4.1"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "hex",
  "serde",
@@ -3555,7 +3587,7 @@ checksum = "ce3cdf1b5e620a498ee6f2a171885ac7e22f0e12089ec4b3d22b84921792507c"
 dependencies = [
  "block-buffer 0.9.0",
  "cfg-if 1.0.0",
- "cpuid-bool",
+ "cpuid-bool 0.1.2",
  "digest 0.9.0",
  "opaque-debug 0.3.0",
 ]
@@ -3580,7 +3612,7 @@ checksum = "6e7aab86fe2149bad8c507606bdb3f4ef5e7b2380eb92350f56122cca72a42a8"
 dependencies = [
  "block-buffer 0.9.0",
  "cfg-if 1.0.0",
- "cpuid-bool",
+ "cpuid-bool 0.1.2",
  "digest 0.9.0",
  "opaque-debug 0.3.0",
 ]
@@ -3612,6 +3644,16 @@ dependencies = [
  "mirai-annotations",
  "serde",
  "thiserror",
+]
+
+[[package]]
+name = "signal-hook"
+version = "0.1.16"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "604508c1418b99dfe1925ca9224829bb2a8a9a04dda655cc01fcad46f4ab05ed"
+dependencies = [
+ "libc",
+ "signal-hook-registry",
 ]
 
 [[package]]
@@ -3665,6 +3707,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "sp-utils"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
+dependencies = [
+ "futures",
+ "futures-core",
+ "lazy_static",
+ "prometheus",
+]
+
+[[package]]
 name = "spec-lang"
 version = "0.1.0"
 source = "git+https://github.com/starcoinorg/libra?rev=4236206844fdba73316d036a1f930e0fab63553b#4236206844fdba73316d036a1f930e0fab63553b"
@@ -3696,8 +3749,8 @@ checksum = "6e63cff320ae2c57904679ba7cb63280a3dc4613885beafb148ee7bf9aa9042d"
 
 [[package]]
 name = "starcoin-account-api"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -3716,8 +3769,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-accumulator"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "byteorder",
@@ -3734,8 +3787,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-canonical-serialization"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "libra-canonical-serialization",
@@ -3744,8 +3797,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-chain"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "once_cell",
@@ -3772,8 +3825,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-chain-api"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -3792,8 +3845,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-config"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "dirs",
@@ -3819,8 +3872,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-consensus"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "async-std",
@@ -3845,8 +3898,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-crypto"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "hex",
@@ -3864,8 +3917,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-crypto-macro"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -3874,8 +3927,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-executor"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "log",
@@ -3901,8 +3954,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-logger"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "chrono",
@@ -3914,8 +3967,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-metrics"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "futures",
@@ -3930,8 +3983,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-move-compiler"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "move-lang",
@@ -3945,8 +3998,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-open-block"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -3968,8 +4021,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-service-registry"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "actix",
  "actix-rt",
@@ -3986,8 +4039,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-state-api"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -4003,8 +4056,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-state-store-api"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "forkable-jellyfish-merkle",
@@ -4014,8 +4067,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-state-tree"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "forkable-jellyfish-merkle",
@@ -4027,8 +4080,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-statedb"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "actix-rt",
  "anyhow",
@@ -4048,8 +4101,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-storage"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "byteorder",
@@ -4058,7 +4111,6 @@ dependencies = [
  "lru",
  "once_cell",
  "parking_lot",
- "paste",
  "rocksdb",
  "serde",
  "starcoin-accumulator",
@@ -4075,8 +4127,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-traits"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -4091,8 +4143,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-transaction-builder"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "starcoin-canonical-serialization",
@@ -4105,8 +4157,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-types"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "actix",
  "anyhow",
@@ -4135,8 +4187,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-uint"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "hex",
  "serde",
@@ -4146,8 +4198,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-vm-runtime"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "move-vm-runtime",
@@ -4170,8 +4222,8 @@ dependencies = [
 
 [[package]]
 name = "starcoin-vm-types"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "bytecode-verifier",
@@ -4217,8 +4269,8 @@ dependencies = [
 
 [[package]]
 name = "stdlib"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "bytecode-verifier",
@@ -4239,8 +4291,8 @@ dependencies = [
 
 [[package]]
 name = "stest"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "actix",
  "actix-rt",
@@ -4255,8 +4307,8 @@ dependencies = [
 
 [[package]]
 name = "stest-macro"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "darling",
  "proc-macro2",
@@ -4272,9 +4324,9 @@ checksum = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
 
 [[package]]
 name = "strsim"
-version = "0.9.3"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6446ced80d6c486436db5c078dde11a9f73d42b57fb273121e160b84f63d894c"
+checksum = "73473c0e59e6d5812c5dfe2a064a6444949f089e20eec9a2e5506596494e4623"
 
 [[package]]
 name = "structopt"
@@ -4314,9 +4366,9 @@ checksum = "343f3f510c2915908f155e94f17220b19ccfacf2a64a2a5d8004f2c3e311e7fd"
 
 [[package]]
 name = "syn"
-version = "1.0.53"
+version = "1.0.54"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8833e20724c24de12bbaba5ad230ea61c3eafb05b881c7c9d3cfe8638b187e68"
+checksum = "9a2af957a63d6bd42255c359c93d9bfdb97076bd3b820897ce55ffbfbf107f44"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4429,8 +4481,8 @@ dependencies = [
 
 [[package]]
 name = "timeout-join-handler"
-version = "0.9.0"
-source = "git+https://github.com/starcoinorg/starcoin#18509aa4bcc947a9127fdc49f0736be159f91cb7"
+version = "0.9.1"
+source = "git+https://github.com/starcoinorg/starcoin#37010d8fdb5ab9bc24beff4d363b6b9bcb52c908"
 dependencies = [
  "anyhow",
  "thiserror",
@@ -4471,9 +4523,9 @@ checksum = "cda74da7e1a664f795bb1f8a87ec406fb89a02522cf6e50620d016add6dbbf5c"
 
 [[package]]
 name = "tokio"
-version = "0.2.23"
+version = "0.2.24"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a6d7ad61edd59bfcc7e80dababf0f4aed2e6d5e0ba1659356ae889752dfc12ff"
+checksum = "099837d3464c16a808060bb3f02263b412f6fafcb5d01c533d309985fbeebe48"
 dependencies = [
  "bytes",
  "fnv",
@@ -5015,9 +5067,9 @@ dependencies = [
 
 [[package]]
 name = "zeroize"
-version = "1.1.1"
+version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "05f33972566adbd2d3588b0491eb94b98b43695c4ef897903470ede4f3f5a28a"
+checksum = "81a974bcdd357f0dca4d41677db03436324d45a4c9ed2d0b873a5a360ce41c36"
 dependencies = [
  "zeroize_derive",
 ]
