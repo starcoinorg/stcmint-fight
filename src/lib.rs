@@ -54,7 +54,6 @@ impl Race {
         let mut selected: HashSet<Address> = HashSet::new();
         let pool_size = pool.len() as u32;
         let black_set: HashSet<AccountAddress> = HashSet::from_iter(black_list.iter().cloned());
-        println!("{:?}", black_set);
         for mut nonce in seeds {
             loop {
                 let address = pool.get((nonce % pool_size) as usize).unwrap();
