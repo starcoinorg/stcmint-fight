@@ -6,7 +6,7 @@ use starcoin_chain_api::ChainReader;
 use starcoin_storage::cache_storage::CacheStorage;
 use starcoin_storage::db_storage::DBStorage;
 use starcoin_storage::storage::StorageInstance;
-use starcoin_storage::{BlockStore, Storage};
+use starcoin_storage::{BlockStore, Storage, VEC_PREFIX_NAME};
 use starcoin_vm_types::account_address::AccountAddress;
 use starcoin_vm_types::time::TimeServiceType;
 use std::cmp::Ordering;
@@ -32,8 +32,9 @@ impl BlockSnapshot {
         let mut end_block_num = 0;
         let storage = Storage::new(StorageInstance::new_cache_and_db_instance(
             CacheStorage::new(),
-            DBStorage::new(path, RocksdbConfig::default())?,
+            DBStorage::open_with_cfs(path, VEC_PREFIX_NAME.to_vec(), true, RocksdbConfig::default())?
         ))?;
+        println!("{:?}", storage.get_block_by_number(1));
         let head_block_hash = storage
             .get_startup_info()?
             .ok_or(anyhow::anyhow!("Failed to get startup info"))?

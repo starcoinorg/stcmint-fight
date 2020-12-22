@@ -2,14 +2,13 @@ use starcoin_vm_types::account_address::AccountAddress;
 use stcmint_fight::chain::BlockSnapshot;
 use stcmint_fight::{Address, Race};
 use structopt::StructOpt;
-use std::fmt;
 
 #[derive(Debug, Clone, StructOpt, Default)]
 #[structopt(name = "stcmint-fight", about = "Starcoin mining competition")]
 pub struct Opt {
     #[structopt(long, short = "t", default_value = "10")]
     pub top: u16,
-    #[structopt(long, short = "d", default_value = "~/.starcoin/proxima")]
+    #[structopt(long, short = "d")]
     pub data_dir: String,
     #[structopt(long, short = "s")]
     pub start_timestamp: Option<u64>,
@@ -22,7 +21,7 @@ pub struct Opt {
 fn main() {
     let opts: Opt = Opt::from_args();
     let top_n = opts.top;
-    let path = fmt::format(format_args!("{}/starcoindb/db", opts.data_dir));
+    let path = opts.data_dir;
     let end_timestamp = opts.end_timestamp;
     let luck_n = opts.luck;
 
