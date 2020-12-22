@@ -37,7 +37,7 @@ fn main() {
     ];
     let start_timestamp = match opts.start_timestamp {
         Some(t) => t,
-        None => 1608220800
+        None => 1608220800,
     };
 
     let black_list = black_list

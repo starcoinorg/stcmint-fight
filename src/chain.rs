@@ -1,8 +1,8 @@
 use crate::{Address, AddressPool};
 use anyhow::Result;
-use starcoin_config::RocksdbConfig;
 use starcoin_chain::BlockChain;
 use starcoin_chain_api::ChainReader;
+use starcoin_config::RocksdbConfig;
 use starcoin_storage::cache_storage::CacheStorage;
 use starcoin_storage::db_storage::DBStorage;
 use starcoin_storage::storage::StorageInstance;
@@ -32,9 +32,13 @@ impl BlockSnapshot {
         let mut end_block_num = 0;
         let storage = Storage::new(StorageInstance::new_cache_and_db_instance(
             CacheStorage::new(),
-            DBStorage::open_with_cfs(path, VEC_PREFIX_NAME.to_vec(), true, RocksdbConfig::default())?
+            DBStorage::open_with_cfs(
+                path,
+                VEC_PREFIX_NAME.to_vec(),
+                true,
+                RocksdbConfig::default(),
+            )?,
         ))?;
-        println!("{:?}", storage.get_block_by_number(1));
         let head_block_hash = storage
             .get_startup_info()?
             .ok_or(anyhow::anyhow!("Failed to get startup info"))?
@@ -46,8 +50,7 @@ impl BlockSnapshot {
         )?;
 
         for number in 0.. {
-            let header = if let Some(header) = chain
-                .get_header_by_number(number)? {
+            let header = if let Some(header) = chain.get_header_by_number(number)? {
                 header
             } else {
                 println!("Latest block number is {}", number - 1);
