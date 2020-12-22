@@ -7,6 +7,7 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+starcoin-config = { git = "https://github.com/starcoinorg/starcoin",package = "starcoin-config"}
 starcoin-chain = { git = "https://github.com/starcoinorg/starcoin",package = "starcoin-chain"}
 starcoin-chain-api = { git = "https://github.com/starcoinorg/starcoin",package ="starcoin-chain-api"}
 starcoin-vm-types = { git = "https://github.com/starcoinorg/starcoin",package = "starcoin-vm-types"}

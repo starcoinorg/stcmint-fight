@@ -1,5 +1,6 @@
 use crate::{Address, AddressPool};
 use anyhow::Result;
+use starcoin_config::RocksdbConfig;
 use starcoin_chain::BlockChain;
 use starcoin_chain_api::ChainReader;
 use starcoin_storage::cache_storage::CacheStorage;
@@ -24,14 +25,14 @@ impl BlockSnapshot {
     pub fn load_from_db<P: AsRef<Path> + Clone>(
         path: P,
         start_timestamp: u64,
-        end_timestamp: u64,
+        end_timestamp: Option<u64>,
     ) -> Result<Self> {
         let mut address_blocks = HashMap::new();
         let mut start_block_num = 0;
         let mut end_block_num = 0;
         let storage = Storage::new(StorageInstance::new_cache_and_db_instance(
             CacheStorage::new(),
-            DBStorage::new(path)?,
+            DBStorage::new(path, RocksdbConfig::default())?,
         ))?;
         let head_block_hash = storage
             .get_startup_info()?
@@ -44,13 +45,18 @@ impl BlockSnapshot {
         )?;
 
         for number in 0.. {
-            let header = chain
-                .get_header_by_number(number)?
-                .ok_or_else(|| anyhow::anyhow!("Can not find block by number: {}", number))?;
+            let header = if let Some(header) = chain
+                .get_header_by_number(number)?{
+                header
+            }else{
+                println!("Latest block number is {}", number-1);
+                break;
+            };
+
             if header.timestamp / 1000 <= start_timestamp {
                 continue;
             }
-            if header.timestamp / 1000 > end_timestamp {
+            if header.timestamp / 1000 > end_timestamp.unwrap_or(u64::max_value()) {
                 break;
             }
             if start_block_num == 0 {
