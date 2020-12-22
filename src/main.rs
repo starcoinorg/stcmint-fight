@@ -13,8 +13,8 @@ fn main() {
     ];
 
     let path = std::path::Path::new("./starcoindb/db");
-    let start_timestamp = 1607090400;
-    let end_timestamp = 1607392800;
+    let start_timestamp = 1608233537;
+    let end_timestamp = None;
     let top_n = 100;
     let lucky_n = 2;
 
@@ -24,7 +24,7 @@ fn main() {
         .collect();
 
     println!(
-        "Select top {:?} winners and lucky {:?} winner, between timestamp: {} to {}",
+        "Select top {:?} winners and lucky {:?} winner, between timestamp: {} to {:?}",
         top_n, lucky_n, start_timestamp, end_timestamp
     );
     let chain = BlockSnapshot::load_from_db(path, start_timestamp, end_timestamp).unwrap();
