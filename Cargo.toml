@@ -14,3 +14,4 @@ starcoin-vm-types = { git = "https://github.com/starcoinorg/starcoin",package = 
 starcoin-storage = { git = "https://github.com/starcoinorg/starcoin",package = "starcoin-storage"}
 anyhow = "1.0.35"
 hex = "0.4.2"
+structopt = "0.3.21"

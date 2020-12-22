@@ -4334,6 +4334,7 @@ dependencies = [
  "starcoin-config",
  "starcoin-storage",
  "starcoin-vm-types",
+ "structopt",
 ]
 
 [[package]]

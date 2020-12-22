@@ -46,10 +46,10 @@ impl BlockSnapshot {
 
         for number in 0.. {
             let header = if let Some(header) = chain
-                .get_header_by_number(number)?{
+                .get_header_by_number(number)? {
                 header
-            }else{
-                println!("Latest block number is {}", number-1);
+            } else {
+                println!("Latest block number is {}", number - 1);
                 break;
             };
 
@@ -62,6 +62,7 @@ impl BlockSnapshot {
             if start_block_num == 0 {
                 start_block_num = header.number;
             }
+
             let author = header.author;
             if let Some(&blocks) = address_blocks.get(&author) {
                 address_blocks.insert(author, blocks + 1);
