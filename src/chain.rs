@@ -57,23 +57,23 @@ impl BlockSnapshot {
                 break;
             };
 
-            if header.timestamp / 1000 <= start_timestamp {
+            if header.timestamp() / 1000 <= start_timestamp {
                 continue;
             }
-            if header.timestamp / 1000 > end_timestamp.unwrap_or(u64::max_value()) {
+            if header.timestamp() / 1000 > end_timestamp.unwrap_or(u64::max_value()) {
                 break;
             }
             if start_block_num == 0 {
-                start_block_num = header.number;
+                start_block_num = header.number();
             }
 
-            let author = header.author;
+            let author = header.author();
             if let Some(&blocks) = address_blocks.get(&author) {
                 address_blocks.insert(author, blocks + 1);
             } else {
                 address_blocks.insert(author, 1);
             }
-            end_block_num = header.number;
+            end_block_num = header.number();
         }
         Ok(Self {
             address_blocks,
@@ -110,7 +110,7 @@ impl AddressPool for BlockSnapshot {
                 .chain
                 .get_header_by_number(part * i as u64)?
                 .ok_or(anyhow::anyhow!("Failed to get header"))?
-                .nonce;
+                .nonce();
             nonces.push(nonce);
         }
         Ok(nonces)
